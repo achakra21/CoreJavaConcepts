@@ -13,14 +13,14 @@ public class HashTableDemo {
 
 		HashTableDemo hashTableDemo = new HashTableDemo();
 		hashTableDemo.initHashTable();
-		//add an element
+		// add an element
 		hashTableDemo.addElement(hashtable, 12, "adding");// if you add duplicate key it would replace the prev
-		//remove element
+		// remove element
 		hashTableDemo.deleteElement(hashtable, 12);
-		//search elements
+		// search elements
 		hashTableDemo.searchElement(hashtable, 1);
-		
-
+		// multi threading
+		hashTableDemo.addSync();
 	}
 
 	/**
@@ -81,6 +81,36 @@ public class HashTableDemo {
 	public void searchElement(Hashtable<Integer, String> hashtable, Integer key) {
 		hashtable.get(key);
 		System.out.println("The Search value for::" + key + "=>" + hashtable.get(key));
+	}
+
+	/**
+	 * check multi threading operations are working
+	 */
+	public void addSync() {
+		Runnable runnable1 = new Runnable() {
+
+			@Override
+			public void run() {
+				addElement(hashtable, 13, "Sysnc1");
+				System.out.println("The hashTableValue in Thread 1::" + hashtable);
+
+			}
+		};
+
+		Runnable runnable2 = new Runnable() {
+
+			@Override
+			public void run() {
+				System.out.println("The hashTableValue in Thread 2::" + hashtable);
+
+			}
+		};
+
+		Thread thread1 = new Thread(runnable1);
+		thread1.start();
+		Thread thread2 = new Thread(runnable2);
+		thread2.start();
+
 	}
 
 }
