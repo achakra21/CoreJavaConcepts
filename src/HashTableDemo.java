@@ -1,53 +1,86 @@
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 public class HashTableDemo {
+
+	static Hashtable<Integer, String> hashtable;
+
 	public static void main(String[] args) {
-		Hashtable<Integer, String> hashtable = new Hashtable<Integer,String>();
+
+		HashTableDemo hashTableDemo = new HashTableDemo();
+		hashTableDemo.initHashTable();
+		//add an element
+		hashTableDemo.addElement(hashtable, 12, "adding");// if you add duplicate key it would replace the prev
+		//remove element
+		hashTableDemo.deleteElement(hashtable, 12);
+		//search elements
+		hashTableDemo.searchElement(hashtable, 1);
+		
+
+	}
+
+	/**
+	 * init the hashtable
+	 * 
+	 * @param hashtable
+	 */
+	public void initHashTable() {
+
+		hashtable = new Hashtable<Integer, String>();
 		hashtable.put(1, "a");
-		hashtable.put(2, "b");
+		hashtable.put(12, "b");
 		hashtable.put(3, "c");
 		hashtable.put(4, "d");
 		hashtable.put(5, "e");
-		
-	//using enumeration	
-		//get the enumeration
-		Enumeration<Integer> enumeration = null ;
-		//get the all the enumeration
-		enumeration = hashtable.keys();
-		
-		//while enumeration has more elements 
-		while ( enumeration.hasMoreElements()){
-			
-			Integer  values = enumeration.nextElement();
-			
-			
-			System.out.println(hashtable.get(values));
-			
+		// hashtable.put(null, null);null key and value is not allowed
+
+		// iterating over the table
+		for (Map.Entry<Integer, String> map : hashtable.entrySet()) {
+			System.out.println("Key::" + map.getKey() + " " + "Value::" + map.getValue());
 		}
-		
-		//using iteration
-		
-		//get all the key sets
-		Set<Integer> keys = hashtable.keySet();
-		
-		// get iterator object
-		Iterator<Integer> iterator = keys.iterator();
-		Integer integer;
-		
-		while (iterator.hasNext()) {
-			
-			
-			//get the key
-			integer = iterator.next();
-			if(integer == 1){
-				iterator.remove();
-			}
-			System.out.println("Keys::   "+integer+""+"Values::  "+hashtable.get(integer) );
-			
-						
-		}
+
 	}
+
+	/**
+	 * Add element using key & value
+	 * 
+	 * @param hashtable
+	 * @param key
+	 * @param value
+	 */
+	public void addElement(Hashtable<Integer, String> hashtable, Integer key, String value) {
+
+		hashtable.put(key, value);
+		System.out.println("After added the value::" + hashtable);
+
+	}
+
+	/**
+	 * delete
+	 * 
+	 * @param hashtable
+	 * @param key
+	 */
+	public void deleteElement(Hashtable<Integer, String> hashtable, Integer key) {
+
+		hashtable.remove(key);
+		System.out.println("After deleted the key::" + hashtable);
+
+	}
+
+	/**
+	 * search element using key
+	 * 
+	 * @param hashtable
+	 * @param key
+	 */
+	public void searchElement(Hashtable<Integer, String> hashtable, Integer key) {
+		hashtable.get(key);
+		System.out.println("The Search value for::" + key + "=>" + hashtable.get(key));
+	}
+
 }
